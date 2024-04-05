@@ -1,0 +1,27 @@
+fn sum_u32_list(numbers: &[u32]) -> Option<u32> {
+    let mut sum: u32 = 0;
+
+    for &num in numbers {
+        match sum.checked_add(num) {
+            Some(result) => sum = result,
+            None => return None, // 溢出时返回 None
+        }
+    }
+
+    Some(sum)
+}
+
+fn main() {
+    let numbers1 = vec![1, 2, 3, 4, 5];
+    let numbers2 = vec![4294967295, 2, 3]; // 整数溢出
+
+    match sum_u32_list(&numbers1) {
+        Some(result) => println!("集合1的总和为：{}", result),
+        None => println!("集合1的总和溢出！"),
+    }
+
+    match sum_u32_list(&numbers2) {
+        Some(result) => println!("集合2的总和为：{}", result),
+        None => println!("集合2的总和溢出！"),
+    }
+}
